@@ -1,10 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from './components/Home.vue';
-import Comprar from './components/Comprar.vue';
+import Cotacao from './Telas/Cotacao.vue';
+import Comprar from './Telas/Comprar.vue';
+import Vender from './Telas/Venda.vue';
 
 const routes = [
-  { path: '/', component: Home },
-  { path: '/comprar', component: Comprar }
+  { path: '/', component: Cotacao },
+  { path: '/comprar', component: Comprar },
+  { path: '/vender', component: Vender }
 ];
 
 const router = createRouter({

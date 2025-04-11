@@ -1,7 +1,7 @@
 <script setup>
 import Header from './Header.vue'
-import Servidores from './Servidores.vue'
-import Cotacao from './Cotacao.vue'
+import Servidores from './Filtro.vue'
+import Cotacao from '../Telas/Cotacao.vue'
 
 
 

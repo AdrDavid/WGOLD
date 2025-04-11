@@ -1,14 +1,14 @@
 <template>
-    <div class="containerServidores">
-        <select name="" id="" class="selectFilter">
-            <option value="">Espansão</option>
+    <div class="w-full bg-gray-800 rounded-lg p-[7px] shadow-lg mb-8  flex  gap-2.5">
+        <select class="rounded-sm bg-gray-700 rounded-lg p-[7px] shadow-lg text-[16px] text-[white] border-none px-2.5 ">
+            <option value="">Expansão</option>
             <option value="">Classic SOD</option>
             <option value="">Cataclysm Classic</option>
             <option value="">Classic Hardcore</option>
             <option value="">The War Within</option>
-            <option value="">Era Classica</option>
+            <option value="">Era Clássica</option>
         </select>
-        <select name="" id="" class="selectFilter">
+        <select class="rounded-sm text-[16px] bg-gray-700 rounded-lg p-[7px] shadow-lg text-[white]  border-none px-2.5 ">
             <option value="">Escolha o Servidor</option>
             <option value="">Server 1</option>
             <option value="">Server 2</option>
@@ -20,23 +20,5 @@
 </template>
 
 <script setup>
-
+// Lógica do componente pode ser adicionada aqui
 </script>
-
-<style scoped>
-    .containerServidores{
-        width: 100%;
-        height: 40px;
-        background-color: blueviolet;
-        display: flex;
-        padding: 0 10%;
-        gap: 10px;
-    }
-
-    .selectFilter{
-        border-radius: 3px;
-        border: none;
-        padding: 0 10px;
-        font-size: 16px;
-    }
-</style>
