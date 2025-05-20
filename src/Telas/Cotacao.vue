@@ -77,6 +77,26 @@
 </template>
 
 <script setup>
+    import { ref, onMounted } from 'vue'
     import Header from '../components/Header.vue'
     import Filtro from '../components/Filtro.vue'
+    import api from '../axios.js'
+
+
+
+
+    function reqUsers(){
+        api.get('/users')
+        .then((response) => {
+            console.log(response.data)
+        })
+        .catch((error) => {
+            console.error(error)
+        })
+    }
+
+    onMounted(() => {
+        reqUsers()
+    })
+
 </script>
