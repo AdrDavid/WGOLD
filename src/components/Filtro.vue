@@ -9,7 +9,7 @@
         <select @change="$emit('set-servidor', $event.target.value)"
             class="rounded-sm text-[16px] bg-gray-700 rounded-lg p-[7px] shadow-lg text-[white]  border-none px-2.5 ">
             <option value="">Escolha o Servidor</option>
-            <option v-for="servidor in servidoresFiltrados" :value="servidor.serverId">{{servidor.serverId}}-{{ servidor.servers }}</option>
+            <option v-for="servidor in servidoresFiltrados" :value="servidor.serverId">{{servidor.serverId}}-{{ servidor.serverName }}</option>
         </select>
     </div>
 </template>
@@ -51,13 +51,16 @@ async function reqGameServers() {
 
 function handleGameVersionChange(event) {
     versaoSelecionada.value = event.target.value
+    emit('set-servidor', event.target.value)
     console.log('Versão de jogo selecionada:', versaoSelecionada.value, typeof versaoSelecionada.value)
 }
 
 const servidoresFiltrados = computed(() => {
     if (!versaoSelecionada.value) return []
-    return servers.value.filter(server => server.gamesId == versaoSelecionada.value)
+    return servers.value.filter(server => server.game.gameId == versaoSelecionada.value)
 })
+
+
 
 onMounted(() => {
     reqGameVersions()
