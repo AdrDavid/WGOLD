@@ -2,7 +2,8 @@
     <Header />
     
     <div class="mx-auto py-12 px-4 sm:px-10 ">
-        <Filtro />
+        <Filtro :servidorCompra="servidorCompra" @set-servidor="servidorCompra = $event" />
+        <button @click="mostrarServidorCompra">teste</button>
         <div class="bg-gray-800 rounded-lg p-6 shadow-lg mb-8">
             <div class="flex items-center gap-4 mb-8">
             <p class="text-[20px] text-[white] text-yellow-400 mb-2">Facção</p>
@@ -26,12 +27,12 @@
                 </thead>
 
                 <tbody>
-                    <tr class="border-b border-gray-300">
-                        <td class="py-2.5">Server 1</td>
+                    <tr v-for="g in goldListings" class="border-b border-gray-300">
+                        <td class="py-2.5">{{ g.serverId }}</td>
                         <td class="py-2.5 text-[#0066CC]">Aliança</td>
-                        <td class="py-2.5 text-[#FFD700]">10.000</td>
-                        <td class="py-2.5 text-[#FFD700]">3.20</td>
-                        <td class="py-2.5">Vendedor</td>
+                        <td class="py-2.5 text-[#FFD700]">{{g.qtd}}</td>
+                        <td class="py-2.5 text-[#FFD700]">{{g.pricePerK }}</td>
+                        <td class="py-2.5">{{ g.userId }}</td>
                         <td class="text-center">
                             <router-link to="/comprar" class="bg-[#0066CC]">
                                 <button class="cursor-pointer w-24 h-8 bg-[#0066CC] text-white rounded-md hover:bg-[#0066CC] transition-colors">
@@ -40,34 +41,7 @@
                             </router-link>
                         </td>
                     </tr>
-                    <tr class="border-b border-gray-300">
-                        <td class="py-2.5">Server 2</td>
-                        <td class="py-2.5 text-[#0066CC]">Aliança</td>
-                        <td class="py-2.5 text-[#FFD700]">11.000</td>
-                        <td class="py-2.5 text-[#FFD700]">2.75</td>
-                        <td class="py-2.5">Vendedor</td>
-                        <td class="text-center">
-                            <router-link to="/comprar" class="bg-[#0066CC]">
-                                <button class="cursor-pointer w-24 h-8 bg-[#0066CC] text-white rounded-md hover:bg-[#0066CC] transition-colors">
-                                    Comprar
-                                </button>
-                            </router-link>
-                        </td>
-                    </tr>
-                    <tr class="border-b border-gray-300">
-                        <td class="py-2.5">Server 3</td>
-                        <td class="py-2.5 text-[#0066CC]">Aliança</td>
-                        <td class="py-2.5 text-[#FFD700]">9.000</td>
-                        <td class="py-2.5 text-[#FFD700]">2.50</td>
-                        <td class="py-2.5">Vendedor</td>
-                        <td class="text-center">
-                            <router-link to="/comprar" class="bg-[#0066CC]">
-                                <button class="cursor-pointer w-24 h-8 bg-[#0066CC] text-white rounded-md hover:bg-[#0066CC] transition-colors">
-                                    Comprar
-                                </button>
-                            </router-link>
-                        </td>
-                    </tr>
+                    
                 </tbody>
             </table>
         </div>  
@@ -84,19 +58,25 @@
 
 
 
-
-    function reqUsers(){
-        api.get('/users')
-        .then((response) => {
-            console.log(response.data)
-        })
-        .catch((error) => {
-            console.error(error)
-        })
+    const gamesVersions = ref()
+    const servidorCompra = ref("")
+    const goldListings = ref([])
+    function mostrarServidorCompra(){
+        console.log(servidorCompra.value)
     }
-
+    
+    async function reqGoldListings(){
+        try {
+            const response = await api.get('/api/goldListing')
+            goldListings.value = response.data
+            console.log(response.data)
+        } catch (error) {
+            console.error('Erro ao buscar versões de jogos:', error)
+        }
+    }
     onMounted(() => {
-        reqUsers()
+        reqGoldListings()
+        // reqGameVersions()
     })
 
 </script>
