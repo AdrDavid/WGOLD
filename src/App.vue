@@ -6,7 +6,7 @@ import Home from './components/Home.vue'
 </script>
 
 <template >
-    <div class="bg-gray-900 min-h-screen">
+    <div class="bg-[#202029] min-h-screen">
         <!-- <Home /> -->
         <router-view></router-view>
     </div>

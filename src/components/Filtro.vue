@@ -1,13 +1,13 @@
 <template>
-    <div class="w-full bg-gray-800 rounded-lg p-[7px] shadow-lg mb-8  flex  gap-2.5">
+    <div class="w-full bg-[#14141a] rounded-lg p-[7px] shadow-lg mb-8  flex  gap-2.5">
         <select @change="handleGameVersionChange"
-            class="rounded-sm bg-gray-700 rounded-lg p-[7px] shadow-lg text-[16px] text-[white] border-none px-2.5 ">
+            class="rounded-sm bg-[#202029] rounded-lg p-[7px] shadow-lg text-[16px] text-[white] border-none px-2.5 py-4">
             <option value="">Expansão</option>
             <option v-for="versao in gamesVersions" :value="versao.gameId" :key="versao.gameId">
                 {{ versao.gameId }}-{{ versao.name }}</option>
         </select>
         <select @change="$emit('set-servidor', $event.target.value)"
-            class="rounded-sm text-[16px] bg-gray-700 rounded-lg p-[7px] shadow-lg text-[white]  border-none px-2.5 ">
+            class="rounded-sm text-[16px] bg-[#202029] rounded-lg p-[7px] shadow-lg text-[white]  border-none px-2.5 py-4 ">
             <option value="">Escolha o Servidor</option>
             <option v-for="servidor in servidoresFiltrados" :value="servidor.serverId">{{servidor.serverId}}-{{ servidor.serverName }}</option>
         </select>
@@ -32,7 +32,7 @@ async function reqGameVersions() {
     try {
         const response = await api.get('/game')
         gamesVersions.value = response.data
-        console.log(gamesVersions.value)
+        // console.log(gamesVersions.value)
     } catch (error) {
         console.error('Erro ao buscar versões de jogos:', error)
     }
@@ -42,7 +42,7 @@ async function reqGameServers() {
     try {
         const response = await api.get('/server')
         servers.value = response.data
-        console.log(servers.value)
+        // console.log(servers.value)
     } catch (error) {
         console.error('Erro ao buscar servers de jogos:', error)
     }
@@ -52,7 +52,7 @@ async function reqGameServers() {
 function handleGameVersionChange(event) {
     versaoSelecionada.value = event.target.value
     emit('set-servidor', event.target.value)
-    console.log('Versão de jogo selecionada:', versaoSelecionada.value, typeof versaoSelecionada.value)
+    // console.log('Versão de jogo selecionada:', versaoSelecionada.value, typeof versaoSelecionada.value)
 }
 
 const servidoresFiltrados = computed(() => {
