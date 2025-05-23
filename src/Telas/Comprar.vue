@@ -105,10 +105,7 @@ const goldListingId = route.params.goldListingId;
 const goldListings = ref();
 console.log(goldListingId);
 // Dados da compra
-const selectedPayment = ref('pix');
-const characterName = ref('');
-const selectedRealm = ref('');
-const messageToSeller = ref('');
+
 const acceptedTerms = ref(false);
 
 const charName = ref('');
@@ -124,11 +121,26 @@ async function reqGoldListingsById() {
     }
 }
 
+const user = ref()
+async function reqUserLogado(){
+    try {
+        const response = await api.get('/Auth/validate',{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+        console.log(response.data)
+        user.value = response.data.userId
+    } catch (error) {
+        // console.error('Erro ao buscar usuario logado:', error)
+    }
+}
+
 async function createdOrderDeCompra(){
     
     const dados = {
         goldListingId: goldListings.value.goldListingId,
-        buyerId: 1,
+        buyerId: user.value,
         charName: charName.value,
         quantity: quantidade.value,
     };
@@ -147,6 +159,7 @@ async function createdOrderDeCompra(){
 
 onMounted(() => {
     reqGoldListingsById();
+    reqUserLogado()
 });
 
 </script>

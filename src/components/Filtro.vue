@@ -1,16 +1,17 @@
 <template>
     <div class="w-full bg-[#14141a] rounded-lg p-[7px] shadow-lg mb-8  flex  gap-2.5">
         <select @change="handleGameVersionChange"
-            class="rounded-sm bg-[#202029] rounded-lg p-[7px] shadow-lg text-[16px] text-[white] border-none px-2.5 py-4">
+            class="w-[220px] rounded-sm bg-[#202029] rounded-lg p-[7px] shadow-lg text-[16px] text-[white] border-none px-2.5 py-4">
             <option value="">Expansão</option>
             <option v-for="versao in gamesVersions" :value="versao.gameId" :key="versao.gameId">
                 {{ versao.gameId }}-{{ versao.name }}</option>
         </select>
         <select @change="$emit('set-servidor', $event.target.value)"
-            class="rounded-sm text-[16px] bg-[#202029] rounded-lg p-[7px] shadow-lg text-[white]  border-none px-2.5 py-4 ">
+            class="w-[220px] rounded-sm text-[16px] bg-[#202029] rounded-lg p-[7px] shadow-lg text-[white]  border-none px-2.5 py-4 ">
             <option value="">Escolha o Servidor</option>
             <option v-for="servidor in servidoresFiltrados" :value="servidor.serverId">{{servidor.serverId}}-{{ servidor.serverName }}</option>
         </select>
+        <slot></slot>
     </div>
 </template>
 

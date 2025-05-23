@@ -50,9 +50,9 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
+import api from '../axios.js'
 import Header from '../components/Header.vue'
 import Filtro from '../components/Filtro.vue'
-import api from '../axios.js'
 
 
 
