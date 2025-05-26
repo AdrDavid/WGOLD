@@ -16,25 +16,27 @@
             </div>
             <div class="w-full h-[250px] bg-[#202029] rounded-lg p-6 shadow-lg mb-8">
                 <h2 class="text-xl font-semibold text-white mb-4">Seus Anuncios</h2>
+                <div class=" overflow-y-auto max-h-[180px]">
+                    <div v-if="user?.role === 'UserVendedor'" v-for="g in goldListings" :key="g.goldListingId"
+                        class="flex items-center gap-3 p-1 ">
 
-                <div v-if="user?.role === 'UserVendedor'" v-for="g in goldListings" :key="g.goldListingId"
-                    class="flex items-center gap-3 p-1">
+                        <div class="flex w-full justify-between bg-[#2e2e2e] rounded-lg p-2 shadow-lg text-xl text-white">
+                            <p class="flex-1">{{ g.server.game.name }}</p>
+                            <p class="flex-1">{{ g.server.serverName }}</p>
+                            <p :class="[' flex-1', g.faccao === 'Aliança' ? 'text-[#0089CC]' : 'text-red-500']">{{ g.faccao
+                            }}</p>
+                            <p class="flex-1 text-[#FFD700]">{{ g.qtd }}</p>
+                            <p class="flex-1 text-[#FFD700]">{{ g.pricePerK }}</p>
+                        </div>
 
-                    <div class="flex w-full justify-between bg-[#2e2e2e] rounded-lg p-2 shadow-lg text-xl text-white">
-                        <p class="flex-1">{{ g.server.game.name }}</p>
-                        <p class="flex-1">{{ g.server.serverName }}</p>
-                        <p :class="[' flex-1', g.faccao === 'Aliança' ? 'text-[#0089CC]' : 'text-red-500']">{{ g.faccao
-                        }}</p>
-                        <p class="flex-1 text-[#FFD700]">{{ g.qtd }}</p>
-                        <p class="flex-1 text-[#FFD700]">{{ g.pricePerK }}</p>
+
+                        <button @click="deleteGoldListings(g.goldListingId)"
+                            class="cursor-pointer text-xl min-w-[150px] bg-red-400 p-2 text-white rounded-md transition-colors">
+                            Apagar
+                        </button>
                     </div>
-
-
-                    <button @click="deleteGoldListings(g.goldListingId)"
-                        class="cursor-pointer text-xl min-w-[150px] bg-red-400 p-2 text-white rounded-md transition-colors">
-                        Apagar
-                    </button>
                 </div>
+                
 
                 <div v-if="user?.role != 'UserVendedor'">
                     <p class="p-2 text-red-400">Ops! seu perfil nao e de vendedor!</p>
@@ -77,7 +79,7 @@
                 </form>
 
             </div>
-            <div class="w-full h-[250px] bg-[#202029] rounded-lg p-6 shadow-lg mb-8">
+            <div class="w-full min-h-[250px] bg-[#202029] rounded-lg p-6 shadow-lg mb-8">
                 <h2 class="text-xl font-semibold text-white mb-4">Ordens criadas</h2>
 
                 <div v-if="user?.role === 'UserVendedor'" v-for="o in ordersFiltradas" :key="o.orderId"
