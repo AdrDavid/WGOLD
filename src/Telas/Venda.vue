@@ -6,17 +6,18 @@
             <!-- <p class="text-[white] text-[16px] mb-4">Bem então vamos começar, para isso vc precisa apenas ter algumas informações cadastradas</p> -->
         </div>
         <div class="p-6 flex flex-wrap gap-4 py-12 bg-[#14141a] rounded-lg w-full min-h-[300px]">
-            <div class="w-[25%] min-w-[220px] h-[250px] bg-[#202029] rounded-lg p-6 shadow-lg mb-8">
+            <div class="w-full flex gap-4">
+                <div class="w-[25%] min-w-[220px] h-[250px] bg-[#202029] rounded-lg p-6 shadow-lg mb-8">
                 <h2 class="text-xl font-semibold text-white mb-4">Dados do Usuário</h2>
                 <p class="text-xl text-white">Nome: <span class="text-yellow-400">{{ user?.username }}</span></p>
                 <p class="text-xl text-white">Email: <span class="text-yellow-400">{{ user?.email }}</span></p>
                 <p class="text-xl text-white">Perfil: <span class="text-yellow-400">{{ user?.role }}</span></p>
 
             </div>
-            <div class="w-full max-w-[73%] h-[250px] bg-[#202029] rounded-lg p-6 shadow-lg mb-8">
+            <div class="w-full h-[250px] bg-[#202029] rounded-lg p-6 shadow-lg mb-8">
                 <h2 class="text-xl font-semibold text-white mb-4">Seus Anuncios</h2>
 
-                <div v-if="user?.role === 'UserVendedor'" v-for="g in goldListingsFiltrados" :key="g.goldListingId"
+                <div v-if="user?.role === 'UserVendedor'" v-for="g in goldListings" :key="g.goldListingId"
                     class="flex items-center gap-3 p-1">
 
                     <div class="flex w-full justify-between bg-[#2e2e2e] rounded-lg p-2 shadow-lg text-xl text-white">
@@ -47,12 +48,14 @@
                 </div>
 
             </div>
+            </div>
+            
             <div v-if="user?.role === 'UserVendedor'"
                 class="w-full h-[250px] bg-[#202029] rounded-lg p-6 shadow-lg mb-8">
                 <h2 class="text-xl font-semibold text-white mb-4">Novo anuncio</h2>
                 <form @submit.prevent="createGoldListings">
                     <Filtro @set-servidor="servidorCompra = $event">
-                        <div class="flex justify-between w-full pr-4 ">
+                        <div class="flex justify-between w-full ">
                             <div class="flex  gap-3">
                                 <select v-model="faccaoSelecionada" name="" id=""
                                     class="w-[220px] rounded-sm text-[16px] text-[white] border-none bg-[#202029] px-2.5 py-4">
@@ -130,6 +133,7 @@ async function reqUserLogado() {
         })
         console.log(response.data)
         user.value = response.data
+        console.log(user.value)
     } catch (error) {
         // console.error('Erro ao buscar usuario logado:', error)
     }
@@ -137,7 +141,7 @@ async function reqUserLogado() {
 
 async function upUserParaVendedor() {
     try {
-        const response = await api.post(`/api/seller/onbording/${user.value.userId}`)
+        const response = await api.post(`/api/seller/onbording/${user.value}`)
         console.log(response.data)
         linkFormulario.value = response.data.onBordingUrl
         window.open(linkFormulario.value, '_blank')
@@ -147,13 +151,16 @@ async function upUserParaVendedor() {
     }
 }
 
-async function reqGoldListings() {
+async function reqGoldListingsByUser() {
+    const dados ={
+        id: user.value?.userId
+    }
     try {
-        const response = await api.get('/api/goldListing')
+        const response = await api.get(`/user/goldlisting/${user.value.userId}`)
         goldListings.value = response.data
         console.log(response.data)
     } catch (error) {
-        console.error('Erro ao buscar versões de jogos:', error)
+        console.error('Erro ao buscar Lista:', error)
     }
 }
 async function createGoldListings() {
@@ -167,7 +174,7 @@ async function createGoldListings() {
     try {
         const response = await api.post('/api/goldListing', dados)
         console.log(response.data)
-        reqGoldListings()
+        reqGoldListingsByUser()
     } catch (error) {
         // console.error('Erro ao criar goldListing', error)
     }
@@ -191,10 +198,10 @@ async function reqOrders() {
     }
 }
 
-const goldListingsFiltrados = computed(() => {
-    if (!goldListings.value || !user.value) return [];
-    return goldListings.value.filter(g => g.user.userId == user.value.userId);
-})
+// const goldListingsFiltrados = computed(() => {
+//     if (!goldListings.value || !user.value) return [];
+//     return goldListings.value.filter(g => g.user.userId == user.value.userId);
+// })
 const ordersFiltradas = computed(() => {
     if (!orders.value || !user.value) return [];
     return orders.value.filter(o => o.goldListing.user.userId == user.value.userId);
@@ -203,9 +210,9 @@ const ordersFiltradas = computed(() => {
 
 
 
-onMounted(() => {
-    reqUserLogado()
-    reqGoldListings()
-    reqOrders()
+onMounted(async () => {
+    await reqUserLogado()
+    await reqOrders()
+    await reqGoldListingsByUser()
 })
 </script>

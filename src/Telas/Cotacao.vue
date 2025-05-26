@@ -13,18 +13,24 @@
                     <option value="Horda">Horda</option>
                 </select>
             </div>
-            
-            <div class="flex w-full justify-between bg-gray-500 rounded-lg p-5 shadow-lg text-xl text-white">
-                    <p class="flex-2">Versao</p>
-                    <p class="flex-1">Servidor</p>
-                    <p class="flex-1">Facção</p>
-                    <p class="flex-1">Estoque</p>
-                    <p class="flex-1">Valor-K</p>
-                    <p class="flex-2">Usuario</p>
+            <div class="flex items-center gap-3 justify-between bg-gray-500 rounded-lg shadow-lg p-1">
+                <div class="flex flex-15  p-5  text-xl text-white">
+                        <p class="flex-2">Versao</p>
+                        <p class="flex-1">Servidor</p>
+                        <p class="flex-1">Facção</p>
+                        <p class="flex-1">Estoque</p>
+                        <p class="flex-1">Valor-K</p>
+                        <p class="flex-1">Usuario</p>
                 </div>
-            <div v-for="g in goldListingsFiltrados" :key="g.goldListingId" class="flex items-center gap-3 p-1">
+                <div class="flex flex-1 p-5  ">
+                </div>
                 
-                <div class="flex w-full justify-between bg-[#202029] rounded-lg p-5 shadow-lg text-xl text-white">
+            </div>
+
+            <div>
+                <div v-for="g in goldListingsFiltrados" :key="g.goldListingId" class="flex items-center gap-3 p-1">
+                
+                <div class="flex  flex-15 justify-between bg-[#202029] rounded-lg p-5 shadow-lg text-xl text-white">
                     <p class="flex-2">{{ g.server.game.name }}</p>
                     <p class="flex-1">{{ g.server.serverName }}</p>
                     <p :class="[' flex-1', g.faccao === 'Aliança' ? 'text-[#0089CC]' : 'text-red-500']">{{ g.faccao }}</p>
@@ -33,7 +39,7 @@
                     <p class="flex-1">{{ g.user.username }}</p>
                 </div>
             
-                <router-link :to="`/comprar/${g.goldListingId}`" class="cursor-pointer text-xl min-w-[150px] bg-[#0066CC] p-5 text-white rounded-md hover:bg-[#0066CC] transition-colors">
+                <router-link :to="`/comprar/${g.goldListingId}`" class="flex-1 cursor-pointer text-xl  bg-[#0066CC] p-5 text-white rounded-md hover:bg-[#0066CC] transition-colors">
                     <button
                         class="w-full"
                         >
@@ -41,6 +47,8 @@
                     </button>
                 </router-link>
             </div>
+            </div>
+            
 
         </div>
 
