@@ -141,7 +141,7 @@ async function reqUserLogado() {
 
 async function upUserParaVendedor() {
     try {
-        const response = await api.post(`/api/seller/onbording/${user.value}`)
+        const response = await api.post(`/api/seller/onbording/${user.value.userId}`)
         console.log(response.data)
         linkFormulario.value = response.data.onBordingUrl
         window.open(linkFormulario.value, '_blank')
