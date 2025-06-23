@@ -9,18 +9,18 @@
                 <select v-model="faccaoSelecionada" name="" id=""
                     class="w-150px rounded-sm text-[16px] text-[white] border-none bg-[#202029] px-5 py-4">
                     <option value="">Selecione</option>
-                    <option value="Aliança">Aliançe</option>
+                    <option value="Aliança">Aliança</option>
                     <option value="Horda">Horda</option>
                 </select>
             </div>
             <div class="flex items-center gap-3 justify-between bg-gray-500 rounded-lg shadow-lg p-1">
                 <div class="flex flex-15  p-5  text-xl text-white">
-                        <p class="flex-2">Versao</p>
+                        <p class="flex-2">Versão</p>
                         <p class="flex-1">Servidor</p>
                         <p class="flex-1">Facção</p>
                         <p class="flex-1">Estoque</p>
                         <p class="flex-1">Valor-K</p>
-                        <p class="flex-1">Usuario</p>
+                        <p class="flex-1">Usuário</p>
                 </div>
                 <div class="flex flex-1 p-5  ">
                 </div>

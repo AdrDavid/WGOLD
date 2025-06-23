@@ -15,7 +15,7 @@
 
             </div>
             <div class="w-full h-[250px] bg-[#202029] rounded-lg p-6 shadow-lg mb-8">
-                <h2 class="text-xl font-semibold text-white mb-4">Seus Anuncios</h2>
+                <h2 class="text-xl font-semibold text-white mb-4">Seus Anúncios</h2>
                 <div class=" overflow-y-auto max-h-[180px]">
                     <div v-if="user?.role === 'UserVendedor'" v-for="g in goldListings" :key="g.goldListingId"
                         class="flex items-center gap-3 p-1 ">
@@ -39,10 +39,10 @@
                 
 
                 <div v-if="user?.role != 'UserVendedor'">
-                    <p class="p-2 text-red-400">Ops! seu perfil nao e de vendedor!</p>
+                    <p class="p-2 text-red-400">Ops! seu perfil não e de vendedor!</p>
                     <p class="p-2 text-blue-400">mas fique tranquilo vc pode se tornar um!</p>
                     <p class="p-2 text-white">Vc vai preencher os dados na stripe e depois vou te mandar um email com
-                        mais informacoes sobre seu perfil</p>
+                        mais informações sobre seu perfil</p>
                     <button v-if="user?.role === 'UsuarioBase'" @click="upUserParaVendedor"
                         class="cursor-pointer text-xl min-w-[150px] bg-[#0066CC] p-3 text-white rounded-md hover:bg-[#0066CC] transition-colors">Tornar-se
                         um vendedor de gold</button>
@@ -61,8 +61,8 @@
                             <div class="flex  gap-3">
                                 <select v-model="faccaoSelecionada" name="" id=""
                                     class="w-[220px] rounded-sm text-[16px] text-[white] border-none bg-[#202029] px-2.5 py-4">
-                                    <option value="">Facccao</option>
-                                    <option value="Aliança">Aliançe</option>
+                                    <option value="">Facccão</option>
+                                    <option value="Aliança">Aliança</option>
                                     <option value="Horda">Horda</option>
                                 </select>
                                 <input v-model="pricePerK" type="number" placeholder="Valor-K" step="0.01"
@@ -80,7 +80,7 @@
 
             </div>
             <div class="w-full min-h-[250px] bg-[#202029] rounded-lg p-6 shadow-lg mb-8">
-                <h2 class="text-xl font-semibold text-white mb-4">Ordens criadas</h2>
+                <h2 class="text-xl font-semibold text-white mb-4">Vendas Realizadas</h2>
 
                 <div v-if="user?.role === 'UserVendedor'" v-for="o in ordersFiltradas" :key="o.orderId"
                     class="flex items-center gap-3 p-1">
