@@ -8,50 +8,56 @@
         <div class="p-6 flex flex-wrap gap-4 py-12 bg-[#14141a] rounded-lg w-full min-h-[300px]">
             <div class="w-full flex gap-4">
                 <div class="w-[25%] min-w-[220px] h-[250px] bg-[#202029] rounded-lg p-6 shadow-lg mb-8">
-                <h2 class="text-xl font-semibold text-white mb-4">Dados do Usuário</h2>
-                <p class="text-xl text-white">Nome: <span class="text-yellow-400">{{ user?.username }}</span></p>
-                <p class="text-xl text-white">Email: <span class="text-yellow-400">{{ user?.email }}</span></p>
-                <p class="text-xl text-white">Perfil: <span class="text-yellow-400">{{ user?.role }}</span></p>
+                    <h2 class="text-xl font-semibold text-white mb-4">Dados do Usuário</h2>
+                    <p class="text-xl text-white">Nome: <span class="text-yellow-400">{{ user?.username }}</span></p>
+                    <p class="text-xl text-white">Email: <span class="text-yellow-400">{{ user?.email }}</span></p>
+                    <p class="text-xl text-white">Perfil: <span class="text-yellow-400">{{ user?.role }}</span></p>
 
-            </div>
-            <div class="w-full h-[250px] bg-[#202029] rounded-lg p-6 shadow-lg mb-8">
-                <h2 class="text-xl font-semibold text-white mb-4">Seus Anúncios</h2>
-                <div class=" overflow-y-auto max-h-[180px]">
-                    <div v-if="user?.role === 'UserVendedor'" v-for="g in goldListings" :key="g.goldListingId"
-                        class="flex items-center gap-3 p-1 ">
+                </div>
+                <div class="w-full h-[250px] bg-[#202029] rounded-lg p-6 shadow-lg mb-8">
+                    <h2 class="text-xl font-semibold text-white mb-4">Seus Anúncios</h2>
+                    <div class=" overflow-y-auto max-h-[180px]">
+                        <div v-if="user?.role === 'UserVendedor'" v-for="g in goldListings" :key="g.goldListingId"
+                            class="flex items-center gap-3 p-1 ">
+                            <div v-if="user?.userId === g?.user?.userId" class="flex items-center gap-3 p-1 ">
+                                <div
+                                    class="flex w-full justify-between bg-[#2e2e2e] rounded-lg p-2 shadow-lg text-xl text-white">
+                                    <p class="flex-1">{{ g.server.game.name }}</p>
+                                    <p class="flex-1">{{ g.server.serverName }}</p>
+                                    <p :class="[' flex-1', g.faccao === 'Aliança' ? 'text-[#0089CC]' : 'text-red-500']">
+                                        {{ g.faccao
+                                        }}</p>
+                                    <p class="flex-1 text-[#FFD700]">{{ g.qtd }}</p>
+                                    <p class="flex-1 text-[#FFD700]">{{ g.pricePerK }}</p>
+                                </div>
+                            
 
-                        <div class="flex w-full justify-between bg-[#2e2e2e] rounded-lg p-2 shadow-lg text-xl text-white">
-                            <p class="flex-1">{{ g.server.game.name }}</p>
-                            <p class="flex-1">{{ g.server.serverName }}</p>
-                            <p :class="[' flex-1', g.faccao === 'Aliança' ? 'text-[#0089CC]' : 'text-red-500']">{{ g.faccao
-                            }}</p>
-                            <p class="flex-1 text-[#FFD700]">{{ g.qtd }}</p>
-                            <p class="flex-1 text-[#FFD700]">{{ g.pricePerK }}</p>
+
+
+                            <button @click="deleteGoldListings(g.goldListingId)"
+                                class="cursor-pointer text-xl min-w-[150px] bg-red-400 p-2 text-white rounded-md transition-colors">
+                                Apagar
+                            </button>
+                            </div>
                         </div>
-
-
-                        <button @click="deleteGoldListings(g.goldListingId)"
-                            class="cursor-pointer text-xl min-w-[150px] bg-red-400 p-2 text-white rounded-md transition-colors">
-                            Apagar
-                        </button>
                     </div>
-                </div>
-                
 
-                <div v-if="user?.role != 'UserVendedor'">
-                    <p class="p-2 text-red-400">Ops! seu perfil não e de vendedor!</p>
-                    <p class="p-2 text-blue-400">mas fique tranquilo vc pode se tornar um!</p>
-                    <p class="p-2 text-white">Vc vai preencher os dados na stripe e depois vou te mandar um email com
-                        mais informações sobre seu perfil</p>
-                    <button v-if="user?.role === 'UsuarioBase'" @click="upUserParaVendedor"
-                        class="cursor-pointer text-xl min-w-[150px] bg-[#0066CC] p-3 text-white rounded-md hover:bg-[#0066CC] transition-colors">Tornar-se
-                        um vendedor de gold</button>
-                    <p class="p-2 text-blue-400">Aguarde a Aprovacao</p>
-                </div>
 
+                    <div v-if="user?.role != 'UserVendedor'">
+                        <p class="p-2 text-red-400">Ops! seu perfil não e de vendedor!</p>
+                        <p class="p-2 text-blue-400">mas fique tranquilo vc pode se tornar um!</p>
+                        <p class="p-2 text-white">Vc vai preencher os dados na stripe e depois vou te mandar um email
+                            com
+                            mais informações sobre seu perfil</p>
+                        <button v-if="user?.role === 'UsuarioBase'" @click="upUserParaVendedor"
+                            class="cursor-pointer text-xl min-w-[150px] bg-[#0066CC] p-3 text-white rounded-md hover:bg-[#0066CC] transition-colors">Tornar-se
+                            um vendedor de gold</button>
+                        <p class="p-2 text-blue-400">Aguarde a Aprovacao</p>
+                    </div>
+
+                </div>
             </div>
-            </div>
-            
+
             <div v-if="user?.role === 'UserVendedor'"
                 class="w-full h-[250px] bg-[#202029] rounded-lg p-6 shadow-lg mb-8">
                 <h2 class="text-xl font-semibold text-white mb-4">Novo anuncio</h2>
@@ -87,8 +93,9 @@
 
                     <div class="flex w-full justify-between bg-[#2e2e2e] rounded-lg p-2 shadow-lg text-xl text-white">
                         <p class="flex-1">{{ o.charName }}</p>
-                        <p :class="[' flex-1', o.goldListing.faccao === 'Aliança' ? 'text-[#0089CC]' : 'text-red-500']">{{ o.goldListing.faccao
-                        }}</p>
+                        <p :class="[' flex-1', o.goldListing.faccao === 'Aliança' ? 'text-[#0089CC]' : 'text-red-500']">
+                            {{ o.goldListing.faccao
+                            }}</p>
                         <p class="flex-1">{{ o.goldListing.server?.serverName }}</p>
                         <p class="flex-1 text-[#FFD700]">{{ o.quantity }}</p>
                     </div>
@@ -154,13 +161,12 @@ async function upUserParaVendedor() {
 }
 
 async function reqGoldListingsByUser() {
-    const dados ={
-        id: user.value?.userId
-    }
+   
     try {
-        const response = await api.get(`/user/goldlisting/${user.value.userId}`)
+        const response = await api.get(`/api/goldlisting`)
+        // const response = await api.get(`/user/goldlisting/${user.value.userId}`)
         goldListings.value = response.data
-        console.log(response.data)
+        console.log("mostrando as listas do user",response.data)
     } catch (error) {
         console.error('Erro ao buscar Lista:', error)
     }
